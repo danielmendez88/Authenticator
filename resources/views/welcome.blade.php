@@ -38,7 +38,7 @@
     <body>
         <div class="container">
             <div class="content">
-                <div class="title">Hola Nueva Aplicación</div>
+                <div class="title">New Application</div>
             </div>
         </div>
     </body>
