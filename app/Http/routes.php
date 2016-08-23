@@ -18,3 +18,11 @@ Route::get('/', function () {
 Route::auth();
 
 Route::get('/home', 'HomeController@index');
+
+/*
+* creamos una ruta para poder acceder al login
+*/
+Route::group(['middleware' => 'cors'], function(){
+	Route::post('/auth_login', 'ApiAuthController@UserAuth');
+});
+

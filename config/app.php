@@ -156,6 +156,16 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /*
+         * Auth - Service Providers...
+         */
+        Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
+
+        /*
+         * Add the Cors\ServiceProvider to your config/app.php providers array:
+         */
+        Barryvdh\Cors\ServiceProvider::class,
+
     ],
 
     /*
