@@ -166,6 +166,16 @@ return [
          */
         Barryvdh\Cors\ServiceProvider::class,
 
+        /*
+         * provedor de servicio para html y css
+         */
+        Collective\Html\HtmlServiceProvider::class,
+
+        /*
+         * agragar un sluggable
+         */
+        Cviebrock\EloquentSluggable\ServiceProvider::class,
+
     ],
 
     /*
@@ -211,6 +221,11 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        /*
+         * aliases de html y css
+         */
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
 
     ],
 

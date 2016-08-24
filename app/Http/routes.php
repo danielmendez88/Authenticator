@@ -26,3 +26,12 @@ Route::group(['middleware' => 'cors'], function(){
 	Route::post('/auth_login', 'ApiAuthController@UserAuth');
 });
 
+ /*
+ *  grupo de rutas para un administrador
+ */
+ Route::group(['prefix' => 'admin', 'middleware' => 'is_admin'], function(){
+ 	//function anonima
+ 	Route::resource('users', 'UsersController@index');
+
+ });
+
