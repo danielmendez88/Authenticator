@@ -31,7 +31,6 @@ Route::group(['middleware' => 'cors'], function(){
  */
  Route::group(['prefix' => 'admin', 'middleware' => 'is_admin'], function(){
  	//function anonima
- 	Route::resource('users', 'UsersController@index');
-
+ 	Route::resource('bitacora', 'BinnacleController@index');
  });
 

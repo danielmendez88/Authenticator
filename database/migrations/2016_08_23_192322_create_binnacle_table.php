@@ -14,17 +14,13 @@ class CreateBinnacleTable extends Migration
     {
         Schema::create('binnacle', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned();
+            $table->string('user_acount', 100);
             $table->ipAddress('myip')->comment('dirección ip del visitante');
-            $table->time('date_ini');
-            $table->time('date_end');
-            $table->longText('logs')->commet('log para obtener informacion');
+            $table->dateTime('date_end');
+            $table->integer('log_types')->comment('tipo de identificador de los logs');
+            $table->longText('logs')->comment('comentario de los logs');
             $table->timestamps();
 
-            //restricciones de llave foranea
-            $table->foreign('user_id')
-                  ->references('id')->on('users')
-                  ->onDelete('cascade');
         });
     }
 

@@ -24,6 +24,13 @@ class UserTableSeeder extends Seeder
                 'last_name' => 'Hernandez Pérez',
                 'email'=> 'mario.hernandez@cimat.mx',
                 'password' => Hash::make('12345')
+            ],
+            [
+                'name' => 'Juan',
+                'last_name' => 'Macias Anaya',
+                'email' => 'juan.macias@cimat.mx',
+                'type' => 'admin',
+                'password' => Hash::make('12345678')
             ]
         ];
 

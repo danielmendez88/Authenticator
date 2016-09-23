@@ -21,13 +21,13 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'id', 'password', 'remember_token',
     ];
 
     public function isAdmin()
     {
         # code...
-        return $this->type === 'admin';
+        return $this->type;
     }
 
 }

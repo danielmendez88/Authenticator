@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Response;
 
 class Istype
 {
@@ -32,11 +33,17 @@ class Istype
            return redirect()->guest('login');
         }
 
-        if (! Auth::guard($guard)->user()->isAdmin()) {
-            # code...
-            return response('no perteneces aquí', 401);
+        switch (Auth::guard($guard)->user()->isAdmin()) {
+            case 'miembro':
+                # code...
+                return Response(view('mensajes.msj_restric')->with('msj','No tienes permisos para acceder a este contenido, sólo administradores pueden ingresar.'));
+                break;
+            
+            default:
+                # code...
+                return $next($request);
+                break;
         }
-        //dd(Auth::guard($guard)->user());
-        return $next($request);
+
     }
 }

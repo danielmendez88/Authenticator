@@ -10,7 +10,9 @@
         "tymon/jwt-auth": "^0.5.9",
         "barryvdh/laravel-cors": "^0.8.1",
         "laravelcollective/html": "5.2.*",
-        "cviebrock/eloquent-sluggable": "^4.0"
+        "cviebrock/eloquent-sluggable": "^4.0",
+        "nesbot/carbon": "^1.21",
+        "laracasts/flash": "^2.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

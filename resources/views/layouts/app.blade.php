@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>@yield('title', 'default')</title>
+    <title>@yield('title', 'Inicio')</title>
 
     <!-- Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
@@ -40,7 +40,7 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    Laravel
+                    Crypto
                 </a>
             </div>
 
@@ -48,6 +48,11 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url('/home') }}">Inicio</a></li>
+                @if (!Auth::guest())
+                    @if ( Auth::user()->type == 'admin')
+                    <li><a href="{{ url('/admin/bitacora') }}">Dashboard</a></li>
+                    @endif
+                @endif   
                 </ul>
 
                 <!-- Right Side Of Navbar -->
@@ -71,7 +76,13 @@
             </div>
         </div>
     </nav>
-
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                @include('flash::message')
+            </div>
+        </div>
+    </div>
     @yield('content')
 
     <!-- JavaScripts -->

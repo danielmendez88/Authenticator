@@ -12,33 +12,33 @@
 						<thead>
 							<tr>
 								<th>#</th>
-								<th>Usuario</th>
-								<th>Nombre</th>
-								<th>Apellido</th>
-								<th>Tipo</th>
+								<th>Cuenta</th>
+								<th>Dirección Ip</th>
+								<th>Fecha de Login</th>
+								<th>Log</th>
 								<th>Accion</th>
 							</tr>
 						</thead>
 						<tbody>
-							@foreach($usuarios as $users)
+							@foreach($bitacora as $binnacle)
 								<tr>
-									<th scope="row">{{ $users->id }}</th>
-									<td>{{ $users->email }}</td>
-									<td>{{ $users->name }}</td>
-									<td>{{ $users->last_name }}</td>
+									<th scope="row">{{ $binnacle->id }}</th>
+									<td>{{ $binnacle->user_acount }}</td>
+									<td>{{ $binnacle->myip }}</td>
+									<td>{{ $binnacle->created_at }}</td>
 									<td>
-									  @if($users->type == "admin")
-									  	<span class="label label-primary">{{ $users->type }}</span>
+									  @if($binnacle->log_types == "1")
+									  	<span class="label label-success">{{ $binnacle->logs }}</span>
 									  @else
-									  	<span class="label label-success">{{ $users->type }}</span>
+									  	<span class="label label-warning">{{ $binnacle->logs }}</span>
 									  @endif
 									</td>
-									<td><a href="" class="btn btn-danger"></a> <a href="" class="btn btn-warning"></a></td>
+									<td><a href="" class="btn btn-danger">Delete</a> <a href="" class="btn btn-warning">Edit</a></td>
 								</tr>
 							@endforeach
 						</tbody>
 					</table>
-					{!! $usuarios->render() !!}					
+					{!! $bitacora->render() !!}					
 				</div>				
 			</div>
 		</div>	

@@ -5,10 +5,17 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
-                <div class="panel-heading">Dashboard</div>
+                <div class="panel-heading">Tablero de Inicio</div>
 
                 <div class="panel-body">
-                    You are logged in!
+                    <h4 class="media-heading">
+                        <div class="alert alert-success" role="alert">Ya te encuentras Logueado</div>
+                    </h4>
+                    <div class="jumbotron">
+                      <h1>Bienvenido a Crypto</h1>
+                      <p>Esto es una plataforma de pruebas, que tiene como objetivo probar diferentes formas de autenticarse de una manera eficiente y segura.</p>
+                      <p><a class="btn btn-primary btn-lg" href="#" role="button">Aprende más</a></p>
+                    </div>
                 </div>
             </div>
         </div>

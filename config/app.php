@@ -176,6 +176,11 @@ return [
          */
         Cviebrock\EloquentSluggable\ServiceProvider::class,
 
+        /**
+         *  agregar la clase de flash
+         */
+        Laracasts\Flash\FlashServiceProvider::class,
+
     ],
 
     /*
