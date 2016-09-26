@@ -110,52 +110,59 @@ class AuthController extends Controller
         $contador = 0;
         $counter_function = $this->GetUserCounter($id_usuario);
         $CurrentDate = $this->GetDateCompare($id_usuario);
-
-        //return dd($CurrentDate);
-        if ($counter_function < 5) {
+        $diffDays = $this->GetDiffDate($request->email);
+        
+        if ($diffDays < 1) {
             # code...
-                if (Auth::guard($this->getGuard())->attempt($credentials, $request->has('remember'))) {
-                    # code...
-                    //return dd($this->store($request));
-                    $request->request->add(['mylog' => '1']);
-                    $this->store($request); //aqui llamamos a la función que guardará los datos en la tabla Binnacle
-                    
-                    $contador =+ 1;
+            if ($counter_function < 5) {
+                # code...
+                    if (Auth::guard($this->getGuard())->attempt($credentials, $request->has('remember'))) {
+                        # code...
+                        //return dd($this->store($request));
+                        $request->request->add(['mylog' => '1']);
+                        $this->store($request); //aqui llamamos a la función que guardará los datos en la tabla Binnacle
+                        
+                        $contador =+ 1;
 
-                    $id = Auth::user()->id;
+                        $id = Auth::user()->id;
 
-                    $counter_function += $contador;
-                        /**
-                         * Aquí invocaremos el metodo que actualizará el numero de veces que se
-                         * autentica el usuario y daremos paso a que nos redireccione al home 
-                         */
-                        $this->UpdateAttempts($id, $counter_function);
-                        return $this->handleUserWasAuthenticated($request, $throttles);
+                        $counter_function += $contador;
+                            /**
+                             * Aquí invocaremos el metodo que actualizará el numero de veces que se
+                             * autentica el usuario y daremos paso a que nos redireccione al home 
+                             */
+                            $this->UpdateAttempts($id, $counter_function);
+                            return $this->handleUserWasAuthenticated($request, $throttles);
+                    }
+            }
+            else
+            {
+                try {
+                    $contrasena = $request->password;
+                    $usuarios = $request->email;
+
+                    $ForUsers = User::where('email', '=', $usuarios)->first();
+                    $passCheck = Hash::check($contrasena, $ForUsers->password);
+
+                    if ($ForUsers == true && $passCheck == true) {
+                        # code...
+                        return redirect()->route('tokenActive', ['id' => $id_usuario, 'contrasena' => $contrasena]);
+                    }
+                    else
+                    {
+                        return $this->sendFailedLoginResponse($request);
+                    }
+
+                } catch (Exception $e) {
+                    return $e->getMessage();
                 }
+            }
         }
         else
         {
-            try {
-                $contrasena = $request->password;
-                $usuarios = $request->email;
-
-                $ForUsers = User::where('email', '=', $usuarios)->first();
-                $passCheck = Hash::check($contrasena, $ForUsers->password);
-
-                if ($ForUsers == true && $passCheck == true) {
-                    # code...
-                    return redirect()->route('tokenActive', ['id' => $id_usuario, 'contrasena' => $contrasena]);
-                }
-                else
-                {
-                    return $this->sendFailedLoginResponse($request);
-                }
-
-            } catch (Exception $e) {
-                return $e->getMessage();
-            }
+            //aquí entrará a la función que lo enviará directamente al token
+            return $this->GenToken($request, $id_usuario);
         }
-
 
         // If the login attempt was unsuccessful we will increment the number of attempts
         // to login and redirect the user back to the login form. Of course, when this
@@ -259,4 +266,37 @@ class AuthController extends Controller
     /**
      * función que nos permite obtener la diferencia de la ultima fecha en que ingresa un usuario con
     */
+    protected function GetDiffDate($updated)
+    {
+        # code...
+        $Last_Updated = DB::table('users')
+                     ->where('email', $updated)
+                     ->value('updated_at');
+
+        $Ahora = Carbon::now();
+        $Last_Updated = Carbon::parse($Last_Updated);
+
+        return $Last_Updated->diffInDays($Ahora); 
+    }
+    /**
+     * Generamos una función que nos permita generar y renviar a la plantilla token
+    */
+    protected function GenToken(Request $solicitud, $id)
+    {
+        # code...
+        $contrasena = $solicitud->password;
+        $usuarios = $solicitud->email;
+
+            $ForUsers = User::where('email', '=', $usuarios)->first();
+            $passCheck = Hash::check($contrasena, $ForUsers->password);
+
+        if ($ForUsers == true && $passCheck == true) {
+                        # code...
+            return redirect()->route('tokenActive', ['id' => $id, 'contrasena' => $contrasena]);
+        }
+        else
+        {
+            return $this->sendFailedLoginResponse($solicitud);
+        }
+    }
 }
