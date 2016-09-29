@@ -138,20 +138,8 @@ class AuthController extends Controller
             else
             {
                 try {
-                    $contrasena = $request->password;
-                    $usuarios = $request->email;
-
-                    $ForUsers = User::where('email', '=', $usuarios)->first();
-                    $passCheck = Hash::check($contrasena, $ForUsers->password);
-
-                    if ($ForUsers == true && $passCheck == true) {
-                        # code...
-                        return redirect()->route('tokenActive', ['id' => $id_usuario, 'contrasena' => $contrasena]);
-                    }
-                    else
-                    {
-                        return $this->sendFailedLoginResponse($request);
-                    }
+                    // enviamos los parametros al metodo para que nos envie directo al token
+                    return $this->GenToken($request, $id_usuario);
 
                 } catch (Exception $e) {
                     return $e->getMessage();
@@ -200,24 +188,6 @@ class AuthController extends Controller
         $bitacora->logs = $logs;
         $bitacora->log_types = $type_logs;
         $bitacora->save();
-    }
-
-    public function UpdateAttempts($id, $aumento)
-    {
-        # code...
-        DB::table('users')
-            ->where('id', $id)
-            ->update(['counter' => $aumento]);
-    }
-
-    protected function GetUserCounter($id)
-    {
-        # code...
-        $user_counter = DB::table('users')
-                            ->where('id', $id)
-                            ->value('counter');
-
-        return $user_counter;
     }
 
     protected function GetUserId($string)

@@ -18,8 +18,13 @@ use Laracasts\Flash\Flash;
 
 use Illuminate\Contracts\Encryption\DecryptException;
 
+use Illuminate\Foundation\Auth\ThrottlesLogins; //
+
 class UsersController extends Controller
 {
+
+    use ThrottlesLogins;
+
     /**
      * Display a listing of the resource.
      *
@@ -198,9 +203,23 @@ class UsersController extends Controller
     protected function UpdateUsersandTokens($idUser)
     {
         # code...
+       $showCOunter = $this->GetUserCounter($idUser);
+       $contador = 0;
+
+       if ($showCOunter < 5) {
+           # code...
+            $contador += $showCOunter + 1;
+       }
+       else
+       {
+            $contador = 0;
+       }
+
+       # actualizamos el registro con la variable que traemos
+
        $updateQuery = DB::table('users')
             ->where('id', $idUser)
-            ->update(['counter' => 0]);
+            ->update(['counter' => $contador]);
 
             return $updateQuery;
     }
