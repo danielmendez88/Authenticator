@@ -14,11 +14,12 @@
                     <div class="jumbotron">
                       <h1>Bienvenido a Crypto</h1>
                       <p>Esto es una plataforma de pruebas, que tiene como objetivo probar diferentes formas de autenticarse de una manera eficiente y segura.</p>
-                      <p><a class="btn btn-primary btn-lg" href="#" role="button">Aprende más</a></p>
+                      <p><a class="btn btn-primary btn-lg" href="#webcamera" data-toggle="modal" data-target="#webcamera"><i class="fa fa-qrcode"></i>&nbsp;&nbsp;Escanear QR</a></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+@include('popUpForms.form')
 @endsection
