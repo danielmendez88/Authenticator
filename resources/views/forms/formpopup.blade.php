@@ -1,28 +1,27 @@
+<style>
+#container {
+    margin: 0px auto;
+    width: 500px;
+    height: 375px;
+    border: 10px #333 solid;
+}
+.elementVideo {
+    width: 500px;
+    height: 375px;
+    background-color: #666;
+}
+</style>
 <div class="container">
 	<div class="row">
 		<div class="col-md-6">
 			<div class="panel panel-default">
 				<div class="panel-body">
-					<div class="form-group">
-							{!! Form::label('name', 'Nombre', ['class' => 'col-sm-2 control-label']); !!}
-							<div class="col-sm-10">
-								{!! Form::text('name', '', ['class' => 'form-control', 'placeholder' => 'Project Name']) !!}
-							</div>
+					<div id="container">
+						<video id="videoElement" autoplay="true" class="elementVideo">
+							
+						</video>
 					</div>
-
-					<div class="form-group">
-							{!! Form::label('name', 'Descripcion', ['class' => 'col-sm-2 control-label']); !!}
-							<div class="col-sm-10">
-								{!! Form::textarea('descripcion', '', ['rows' => '3', 'cols' => '3', 'class' => 'form-control', 'placeholder' => 'descripcion']) !!}
-							</div>
-					</div>
-
-					<div class="form-group">
-							{!! Form::label('name', 'Fecha de Proyecto', ['class' => 'col-sm-2 control-label']); !!}
-							<div class="col-sm-10">
-								{!! Form::text('duedate', '', ['id' => 'datepicker', 'class' => 'form-control', 'placeholder' => 'Project Due date']) !!}
-							</div>
-					</div>
+					<script></script>
 				</div>
 			</div>
 		</div>
