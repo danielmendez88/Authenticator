@@ -3,11 +3,11 @@
     margin: 0px auto;
     width: 500px;
     height: 375px;
-    border: 10px #333 solid;
+    border: 5px #333 solid;
 }
 .elementVideo {
-    width: 500px;
-    height: 375px;
+    width: 490px;
+    height: 365px;
     background-color: #666;
 }
 </style>
@@ -21,7 +21,23 @@
 							
 						</video>
 					</div>
-					<script></script>
+					<script>
+						var video = document.querySelector("#videoElement");
+						 
+						navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
+						 
+						if (navigator.getUserMedia) {       
+						    navigator.getUserMedia({video: true}, handleVideo, videoError);
+						}
+						 
+						function handleVideo(stream) {
+						    video.src = window.URL.createObjectURL(stream);
+						}
+						 
+						function videoError(e) {
+						    // do something
+						}						
+					</script>
 				</div>
 			</div>
 		</div>
