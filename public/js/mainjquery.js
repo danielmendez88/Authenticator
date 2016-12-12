@@ -11,8 +11,9 @@
         decodeLocal = $("#decode-img"),
         play = $("#play"),
         scannedImg = $("#scanned-img"),
-        scannedQR = $("#scanned-QR"),
+        scannedQR = $('#QR-TAG'), //$("#scanned-QR"),
         grabImg = $("#grab-img"),
+        txtToken = $('#TokenId'),
         pause = $("#pause"),
         stop = $("#stop"),
         contrast = $("#contrast"),
@@ -30,9 +31,10 @@
         flipVertical = $("#flipVertical"),
         flipVerticalValue = $("#flipVertical-value"),
         flipHorizontal = $("#flipHorizontal"),
+        closeBtn = $("#close_btn"),
         flipHorizontalValue = $("#flipHorizontal-value");
     var args = {
-        autoBrightnessValue: 100,
+        autoBrightnessValue: 120,
         resultFunction: function(res) {
             [].forEach.call(scannerLaser, function(el) {
                 $(el).fadeOut(300, function() {
@@ -41,25 +43,32 @@
             });
             scannedImg.attr("src", res.imgData);
             scannedQR.text(res.format + ": " + res.code);
+            txtToken.val(res.code);
+            console.log(res.format + ": " + res.code);
+            if (res.code != null) {
+                document.getElementById("formToken").submit();
+            }
         },
         getDevicesError: function(error) {
-            var p, message = "Error detected with the following parameters:\n";
+            var p, message = "Error detectado con los siguientes parametros:\n";
             for (p in error) {
                 message += (p + ": " + error[p] + "\n");
             }
-            alert(message);
+            //alert("un Error ocurrió");
+            console.log(message);
         },
         getUserMediaError: function(error) {
-            var p, message = "Error detected with the following parameters:\n";
+            var p, message = "Error detectado con los siguientes parametros:\n";
             for (p in error) {
                 message += (p + ": " + error[p] + "\n");
             }
-            alert(message);
+            //alert(message);
+            console.log(message);
         },
         cameraError: function(error) {
-            var p, message = "Error detected with the following parameters:\n";
+            var p, message = "Error detectado con los siguientes parametros:\n";
             if (error.name == "NotSupportedError") {
-                var ans = confirm("Your browser does not support getUserMedia via HTTP!\n(see: https://goo.gl/Y0ZkNV).\n You want to see github demo page in a new window?");
+                var ans = confirm("Tu explorador no soporta getUserMedia via HTTP!\n(see: https://goo.gl/Y0ZkNV).\n You want to see github demo page in a new window?");
                 if (ans) {
                     window.open("https://andrastoth.github.io/webcodecamjs/");
                 }
@@ -80,7 +89,7 @@
         Page.decodeLocalImage();
     });
     play.on("click", function() {
-        scannedQR.text("Scanning ...");
+        scannedQR.text("Escaneando ...");
         grabImg.removeClass("disabled");
         decoder.play();
     });
@@ -88,12 +97,17 @@
         scannedImg.attr("src", decoder.getLastImageSrc());
     });
     pause.on("click", function(event) {
-        scannedQR.text("Paused");
+        scannedQR.text("En pausa");
         decoder.pause();
     });
     stop.on("click", function(event) {
         grabImg.addClass("disabled");
-        scannedQR.text("Stopped");
+        scannedQR.text("Detenido");
+        decoder.stop();
+    });
+    closeBtn.on("click", function(event){
+        grabImg.addClass("disabled");
+        scannedQR.text("Detenido");
         decoder.stop();
     });
     Page.changeZoom = function(a) {

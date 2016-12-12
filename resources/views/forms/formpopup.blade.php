@@ -22,7 +22,8 @@
 		                    <div class="scanner-laser laser-rightTop" style="opacity: 0.5;"></div>
 		                    <div class="scanner-laser laser-leftBottom" style="opacity: 0.5;"></div>
 		                    <div class="scanner-laser laser-leftTop" style="opacity: 0.5;"></div>							
-						</div>						
+						</div>
+						<p id="scanned-QR"></p>
 					</div>
 					<!--contenedor-->
 					<!--<div id="container">

@@ -12,8 +12,7 @@
 				@include('forms.formpopup')
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-				<button type="button" class="btn btn-primary">Guardar Cambios</button>
+				<button type="button" id="close_btn" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
 			</div>
 			{!! Form::close() !!}
 			<!--cerrar el formulario-->
