@@ -57,6 +57,7 @@
                                 <a class="btn btn-link" href="{{ url('/password/reset') }}">Olvidaste tu contraseña?</a>
                             </div>
                         </div>
+                        {{$token_debug}}
                     </form>
                 </div>
             </div>
