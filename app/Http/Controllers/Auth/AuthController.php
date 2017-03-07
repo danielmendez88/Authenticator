@@ -269,89 +269,34 @@ class AuthController extends Controller
             return $this->sendFailedLoginResponse($solicitud);
         }
     }
-
-
     /**
      * generate a ramdonToken
     */
-    protected function RandomTokenDebug($digits_needed = 8)
+    protected function RandomTokenDebug($seed_given=91673795 ,$length = 8)
     {
-        $num = str_pad(random_int(0,99999999),$digits_needed,'0',STR_PAD_LEFT);
+        //set an Array to 
+        $a = array(1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000);
+        $new_list = array();
+        $exp = 2;
+        $limit = 6; // limit of numbers that the array can stores
+        $set_value; //this is the value we can set as module
+        $z = pow($seed_given, $exp);//long value to raise seed to square
 
-        $random_number=''; // set up a blank string
-
-        $count=0;
-
-        while ( $count < $digits_needed ) {
-            $random_digit = mt_rand(0, 9);
-            
-            $random_number .= $random_digit;
-            $count++;
+        $trim = ($length/2); //in this case the value gets the result that divide length generator between 2
+        $z = $z/$a[$trim];
+        $n = $z%10;
+        array_unshift($new_list, $n);
+        for ($i=0; $i < $length; $i++) { 
+            # code...
+            $z/=10;
+            if ($i <= $limit) {
+                # code...
+                $set_value = $z%10;
+                array_unshift($new_list, $set_value);
+            }
         }
-
-        return $num;
-    }
-    /**
-    */
-
-    function mtr($seed = null, $min = 0, $max = 99999999)
-    {
-      static $mt = array(); // 624 element array used to get random numbers
-      static $ps = null; // Previous Seed
-      static $idx = 0; // The index to use when selecting a number to randomize
-
-
-      // Seed if none was given
-      if($seed === null && !$ps) {
-        $seed = time();
-      }
-
-
-      // Regenerate when reseeding or seeding initially
-      if($seed !== null && $seed !== $ps) {
-        $mt = array(&$seed, 624 => &$seed);
-        $ps = $seed;
-
-
-      for($i = 1; $i < 624; ++$i) {
-          $mt[$i] = (0x6c078965 * ($mt[$i - 1] ^ ($mt[$i - 1] >> 30)) + $i) & 0xffffffff;
-        }
-      }
-
-
-      // Every 624 numbers we regenerate
-      if($idx == 0) {
-        // This has been tweaked for maximum speed and elegance
-        // Explanation of possibly confusing variables:
-        //   $p = previous index
-        //   $sp = split parts of array - the numbers at which to stop and continue on
-        //   $n = number to iterate to - we loop up to 227 adding 397 after which we finish looping up to 624
-        //        subtracting 227 to continue getting out 397 indices ahead reference
-        //   $m = 397 or -227 to add to $i to keep our 397 index difference
-        //   $i = the previous element in $sp, our starting index in this iteration
-        for($j = 1, $sp = array(0, 227, 397); $j < count($sp); ++$j) {
-          for($p = $j - 1, $i = $sp[$p], $m = ((624 - $sp[$j]) * ($p ? -1 : 1)), $n = ($sp[$j] + $sp[$p]); $i < $n; ++$i) {
-            $y = ($mt[$i] & 0x80000000) + ($mt[$i + 1] & 0x7fffffff);
-            $mt[$i] = $mt[$i + $m] ^ (($y & 0x1) * 0x9908b0df);
-          }
-        }
-      }
-
-
-      // Select a number from the array and randomize it
-      $y = $mt[$idx];
-      $y ^= $y >> 11;
-      $y ^= ($y << 7) & 0x9d2c5680;
-      $y ^= ($y << 15) & 0xefc60000;
-      $y ^= $y >> 18;
-
-
-      // Increment the index so we will be able to get a different random number without changing the seed
-      $idx++;
-      if($idx == 624) $idx = 0;
-
-
-     return $y % ($max - $min + 1) + $min;
+        //put max and min range of value's length
+        print_r($new_list);
     }
 
 }
